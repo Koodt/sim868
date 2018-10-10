@@ -36,9 +36,7 @@ while True:
             connection.close()
     except SystemExit:
         print >> sys.stderr, 'System exit'
-        sock.close()
         sys.exit(0)
     except KeyboardInterrupt:
         print >> sys.stderr, 'From keyboard'
-        sock.close()
         sys.exit(0)
