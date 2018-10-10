@@ -6,7 +6,12 @@ import sys
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serverAddress = ('', 10000)
 print >> sys.stderr, 'starting up on %s port %s' % serverAddress
-sock.bind(serverAddress)
+
+try:
+    sock.bind(serverAddress)
+except socket.error as message:
+    print >> sys.stderr, 'Socket error %s' % message
+    sys.exit(0)
 
 sock.listen(1)
 
@@ -29,12 +34,11 @@ while True:
                     break
         finally:
             connection.close()
-    except socket.error as message:
-        print >> sys.stderr, 'Socket error %s' % message
-        sys.exit(0)
     except SystemExit:
         print >> sys.stderr, 'System exit'
+        sock.close()
         sys.exit(0)
     except KeyboardInterrupt:
         print >> sys.stderr, 'From keyboard'
+        sock.close()
         sys.exit(0)
