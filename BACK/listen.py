@@ -30,4 +30,5 @@ while True:
         finally:
             connection.close()
     except (KeyboardInterrupt, SystemExit):
+        print >> sys.stderr, 'Exit'
         sys.exit(0)
