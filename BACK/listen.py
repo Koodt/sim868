@@ -29,6 +29,12 @@ while True:
                     break
         finally:
             connection.close()
-    except (KeyboardInterrupt, SystemExit):
-        print >> sys.stderr, 'Exit'
+    except socket.error as message:
+        print >> sys.stderr, 'Socket error %s' % message
+        sys.exit(0)
+    except SystemExit:
+        print >> sys.stderr, 'System exit'
+        sys.exit(0)
+    except KeyboardInterrupt:
+        print >> sys.stderr, 'From keyboard'
         sys.exit(0)
