@@ -30,4 +30,4 @@ while True:
         finally:
             connection.close()
     except (KeyboardInterrupt, SystemExit):
-        connection.close()
+        sys.exit(0)
