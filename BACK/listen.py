@@ -26,5 +26,7 @@ while True:
             else:
                 print >> sys.stderr, 'no more dat from', client_address
                 break
+    except (KeyboardInterrupt, SystemExit):
+        rollback()
     finally:
         connection.close()
