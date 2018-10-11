@@ -1,6 +1,12 @@
 #!/usr/bin/python
 import socket
 import sys
+from Crypto.Cipher import AES
+
+def encryptData(message):
+    data = AES.new('This is a key123', AES.MODE_CBC, 'This is an 456')
+    encryptText = data.encrypt(message)
+    return encryptText
 
 def get_constants(prefix):
     return dict( (getattr(socket, n), n)
@@ -23,12 +29,13 @@ print >>sys.stderr
 try:
 
     # Send data
-    message = 'This is the message.  It will be repeated.'
-    print >>sys.stderr, 'sending "%s"' % message
-    sock.sendall(message)
+    message = input()
+    encryptMessage = encryptData(message)
+    print >>sys.stderr, 'sending "%s"' % encryptMessage
+    sock.sendall(encryptMessage)
 
     amount_received = 0
-    amount_expected = len(message)
+    amount_expected = len(encryptMessage)
 
     while amount_received < amount_expected:
         data = sock.recv(16)
