@@ -2,11 +2,19 @@
 import socket
 import sys
 from Crypto.Cipher import AES
+from Crypto import Random
+
+key = b'f861feab561441c0e1fdcba91581dd95'
+iv = Random.new().read(AES.block_size)
+obj = AES.new(key, AES.MODE_CBC, iv)
 
 def encryptData(message):
-    data = AES.new('This is a key123', AES.MODE_CBC, 'This is an 456')
-    encryptText = data.encrypt(message)
+    encryptText = obj.encrypt(message)
     return encryptText
+
+def decryptData(message):
+    decryptText = obj.decrypt(message)
+    return decryptText
 
 def get_constants(prefix):
     return dict( (getattr(socket, n), n)
@@ -29,7 +37,8 @@ print >>sys.stderr
 try:
 
     # Send data
-    message = input()
+    #message = raw_input()
+    message = b'Attack at dawnfg'
     encryptMessage = encryptData(message)
     print >>sys.stderr, 'sending "%s"' % encryptMessage
     sock.sendall(encryptMessage)
@@ -40,7 +49,8 @@ try:
     while amount_received < amount_expected:
         data = sock.recv(16)
         amount_received += len(data)
-        print >>sys.stderr, 'received "%s"' % data
+        decryptMessage = decryptData(data)
+        print >>sys.stderr, 'received "%s"' % decryptMessage
 
 finally:
     print >>sys.stderr, 'closing socket'
