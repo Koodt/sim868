@@ -2,6 +2,16 @@
 
 import socket
 import sys
+from Crypto.Cipher import AES
+from Crypto import Random
+
+key = b'f861feab561441c0e1fdcba91581dd95'
+iv = Random.new().read(AES.block_size)
+obj = AES.new(key, AES.MODE_CBC, iv)
+
+def decryptData(message):
+    decryptText = obj.decrypt(message)
+    return decryptText
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serverAddress = ('', 10000)
@@ -25,12 +35,13 @@ while True:
 
             while True:
                 data = connection.recv(16)
-                print >> sys.stderr, 'received "%s"' % data
-                if data:
+                decryptMessage = decryptData(data)
+                print >> sys.stderr, 'received "%s"' % decryptMessage
+                if decryptMessage:
                     print >> sys.stderr, 'sending data back to the client'
-                    connection.sendall(data)
+                    connection.sendall(decryptMessage)
                 else:
-                    print >> sys.stderr, 'no more dat from', client_address
+                    print >> sys.stderr, 'no more data from', client_address
                     break
         finally:
             connection.close()

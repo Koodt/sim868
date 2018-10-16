@@ -9,7 +9,7 @@ iv = Random.new().read(AES.block_size)
 obj = AES.new(key, AES.MODE_CBC, iv)
 
 def encryptData(message):
-    encryptText = obj.encrypt(message)
+    encryptText = iv + obj.encrypt(message)
     return encryptText
 
 def decryptData(message):
@@ -27,7 +27,7 @@ types = get_constants('SOCK_')
 protocols = get_constants('IPPROTO_')
 
 # Create a TCP/IP socket
-sock = socket.create_connection(('target.host', 10000))
+sock = socket.create_connection(('k0dt.ru', 10000))
 
 print >>sys.stderr, 'Family  :', families[sock.family]
 print >>sys.stderr, 'Type    :', types[sock.type]
