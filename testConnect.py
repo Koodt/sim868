@@ -43,15 +43,6 @@ try:
     print >> sys.stderr, 'sending "%s"' % encryptMessage
     sock.sendall(encryptMessage)
 
-    amount_received = 0
-    amount_expected = len(encryptMessage)
-
-    while amount_received < amount_expected:
-        data = sock.recv(16)
-        amount_received += len(data)
-        decryptMessage = decryptData(data)
-        print >> sys.stderr, 'received "%s"' % decryptMessage
-
 finally:
     print >> sys.stderr, 'closing socket'
     sock.close()
