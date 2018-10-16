@@ -33,10 +33,9 @@ while True:
         try:
             print >> sys.stderr, 'connection from', client_address
 
-            while True:
-                data = connection.recv(32)
-                decryptMessage = decryptData(data)
-                print >> sys.stderr, 'received "%s"' % decryptMessage
+            data = connection.recv(32)
+            decryptMessage = decryptData(data)
+            print >> sys.stderr, 'received "%s"' % decryptMessage
         finally:
             connection.close()
     except SystemExit:
