@@ -42,6 +42,8 @@ try:
     encryptMessage = encryptData(message)
     print >> sys.stderr, 'sending "%s"' % encryptMessage
     sock.sendall(encryptMessage)
+    decryptMessage = decryptData(encryptMessage)
+    print >> sys.stderr, 'local decrypting "%s"' % decryptMessage
 
 finally:
     print >> sys.stderr, 'closing socket'
