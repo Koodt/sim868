@@ -37,12 +37,6 @@ while True:
                 data = connection.recv(16)
                 decryptMessage = decryptData(data)
                 print >> sys.stderr, 'received "%s"' % decryptMessage
-                if decryptMessage:
-                    print >> sys.stderr, 'sending data back to the client'
-                    connection.sendall(decryptMessage)
-                else:
-                    print >> sys.stderr, 'no more data from', client_address
-                    break
         finally:
             connection.close()
     except SystemExit:

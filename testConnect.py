@@ -29,10 +29,10 @@ protocols = get_constants('IPPROTO_')
 # Create a TCP/IP socket
 sock = socket.create_connection(('k0dt.ru', 10000))
 
-print >>sys.stderr, 'Family  :', families[sock.family]
-print >>sys.stderr, 'Type    :', types[sock.type]
-print >>sys.stderr, 'Protocol:', protocols[sock.proto]
-print >>sys.stderr
+print >> sys.stderr, 'Family  :', families[sock.family]
+print >> sys.stderr, 'Type    :', types[sock.type]
+print >> sys.stderr, 'Protocol:', protocols[sock.proto]
+print >> sys.stderr
 
 try:
 
@@ -40,7 +40,7 @@ try:
     #message = raw_input()
     message = b'Attack at dawnfg'
     encryptMessage = encryptData(message)
-    print >>sys.stderr, 'sending "%s"' % encryptMessage
+    print >> sys.stderr, 'sending "%s"' % encryptMessage
     sock.sendall(encryptMessage)
 
     amount_received = 0
@@ -50,8 +50,8 @@ try:
         data = sock.recv(16)
         amount_received += len(data)
         decryptMessage = decryptData(data)
-        print >>sys.stderr, 'received "%s"' % decryptMessage
+        print >> sys.stderr, 'received "%s"' % decryptMessage
 
 finally:
-    print >>sys.stderr, 'closing socket'
+    print >> sys.stderr, 'closing socket'
     sock.close()
