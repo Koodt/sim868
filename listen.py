@@ -14,7 +14,7 @@ def decryptData(message):
     return decryptText
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-serverAddress = ('', 10000)
+serverAddress = ('', 27072)
 print >> sys.stderr, 'starting up on %s port %s' % serverAddress
 
 try:

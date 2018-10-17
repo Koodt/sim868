@@ -27,7 +27,7 @@ types = get_constants('SOCK_')
 protocols = get_constants('IPPROTO_')
 
 # Create a TCP/IP socket
-sock = socket.create_connection(('k0dt.ru', 10000))
+sock = socket.create_connection(('k0dt.ru', 27072))
 
 print >> sys.stderr, 'Family  :', families[sock.family]
 print >> sys.stderr, 'Type    :', types[sock.type]
@@ -38,7 +38,7 @@ try:
 
     # Send data
     #message = raw_input()
-    message = b'0011010110110011'
+    message = b'1111111111111111'
     encryptMessage = encryptData(message)
     print >> sys.stderr, 'sending "%s"' % encryptMessage
     sock.sendall(encryptMessage)
