@@ -7,15 +7,18 @@ from Crypto import Random
 
 
 def getDataFromJSON():
-    with open("default.json") as sourceFile:
-        data = json.load(sourceFile)
-        return (
-            data["targetHost"],
-            int(data["targetPort"]),
-            bytes(data["messages"][0]),
-            bytes(data["AESkey"]),
-        )
-
+    try:
+        with open("default.json") as sourceFile:
+            data = json.load(sourceFile)
+            return (
+                data["targetHost"],
+                int(data["targetPort"]),
+                bytes(data["messages"][0]),
+                bytes(data["AESkey"]),
+            )
+    except IOError as errMessage:
+        print >> sys.stderr, "I/O error(%s): %s - %s" % (errMessage.errno, errMessage.filename, errMessage.strerror)
+        sys.exit(0)
 
 targetHost, targetPort, message, key = getDataFromJSON()
 iv = Random.new().read(AES.block_size)
@@ -44,7 +47,7 @@ protocols = get_constants("IPPROTO_")
 try:
     sock = socket.create_connection((targetHost, targetPort))
 except socket.error as errMessage:
-    print >>sys.stderr, "Socket error %s" % errMessage
+    print >> sys.stderr, "Socket error(%s): %s" % (errMessage.errno, errMessage.strerror)
     sys.exit(0)
 
 print >>sys.stderr, "Family   :", families[sock.family]
