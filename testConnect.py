@@ -12,7 +12,7 @@ obj = AES.new(key, AES.MODE_CBC, iv)
 def getDataFromJSON():
     with open('default.json') as sourceFile:
         data = json.load(sourceFile)
-        return data['targetHost'], int(data['targetPort'])
+        return data['targetHost'], int(data['targetPort']), data['messages'][1]
 
 def encryptData(message):
     encryptText = iv + obj.encrypt(message)
@@ -28,7 +28,7 @@ def get_constants(prefix):
                  if n.startswith(prefix)
                  )
 
-targetHost, targetPort = getDataFromJSON()
+targetHost, targetPort, message = getDataFromJSON()
 
 families = get_constants('AF_')
 types = get_constants('SOCK_')
@@ -46,7 +46,7 @@ try:
 
     # Send data
     #message = raw_input()
-    message = b'1111111111111111'
+#    message = b'1111111111111111'
     encryptMessage = encryptData(message)
     print >> sys.stderr, 'sending "%s"' % encryptMessage
     sock.sendall(encryptMessage)
