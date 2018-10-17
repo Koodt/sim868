@@ -38,7 +38,7 @@ try:
 
     # Send data
     #message = raw_input()
-    message = b'Attack at dawnfg'
+    message = b'0011010110110011'
     encryptMessage = encryptData(message)
     print >> sys.stderr, 'sending "%s"' % encryptMessage
     sock.sendall(encryptMessage)

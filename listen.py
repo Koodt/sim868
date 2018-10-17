@@ -35,6 +35,8 @@ while True:
 
             data = connection.recv(32)
             decryptMessage = decryptData(data)
+            if '1111111111111111' in decryptMessage:
+                sys.exit(0)
             print >> sys.stderr, 'received "%s"' % decryptMessage
         finally:
             connection.close()
