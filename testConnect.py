@@ -2,7 +2,7 @@
 import json
 import socket
 import sys
-import pem
+from Crypto.PublicKey import RSA
 from Crypto.Cipher import AES
 from Crypto import Random
 
@@ -16,15 +16,30 @@ def getDataFromJSON():
                 int(data["targetPort"]),
                 bytes(data["messages"][0]),
                 bytes(data["AESkey"]),
+                str(data["RSAkeys"]["privateFile"]),
+                str(data["RSAkeys"]["publicFile"]),
             )
     except IOError as errMessage:
         print >> sys.stderr, "I/O error(%s): %s - %s" % (errMessage.errno, errMessage.filename, errMessage.strerror)
         sys.exit(0)
 
-targetHost, targetPort, message, key = getDataFromJSON()
+targetHost, targetPort, message, key, privateFile, publicFile = getDataFromJSON()
 iv = Random.new().read(AES.block_size)
 obj = AES.new(key, AES.MODE_CBC, iv)
 
+def getRSAKeys(privateFile, publicFile):
+    with open(privateFile, "r") as sourceFile:
+        privateKeyStr = sourceFile.read()
+    sourceFile.close()
+    with open(publicFile, "r") as sourceFile:
+        publicKeyStr = sourceFile.read()
+    sourceFile.close()
+    privateKey = RSA.importKey(privateKeyStr)
+    publicKey = RSA.importKey(publicKeyStr)
+    return (
+        privateKey,
+        publicKey,
+    )
 
 def encryptData(message):
     encryptText = iv + obj.encrypt(message)
@@ -44,7 +59,6 @@ families = get_constants("AF_")
 types = get_constants("SOCK_")
 protocols = get_constants("IPPROTO_")
 
-# Create a TCP/IP socket
 try:
     sock = socket.create_connection((targetHost, targetPort))
 except socket.error as errMessage:
