@@ -2,6 +2,7 @@
 import json
 import socket
 import sys
+import pem
 from Crypto.Cipher import AES
 from Crypto import Random
 
