@@ -2,15 +2,15 @@ try:
     from pip._internal.req import parse_requirements
 except ImportError:
     from pip.req import parse_requirements
-    
+
 from setuptools import setup
 import uuid
 
 setup(
-        name='ksim868',
+        name='khome',
         version='0.0.1',
-        modules=['ksim868'],
-        scripts=['ksim868.py'],
+        modules=['khome'],
+        scripts=['khome.py'],
         url='https://github.com/Koodt/sim868',
         license='MIT License',
         author='Koodt',
