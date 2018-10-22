@@ -8,7 +8,7 @@ from Crypto import Random
 
 def getDataFromJSON():
     try:
-        with open("default.json") as sourceFile:
+        with open("../../json/default.json") as sourceFile:
             data = json.load(sourceFile)
             return data
     except IOError as errMessage:
