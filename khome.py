@@ -3,6 +3,7 @@
 import socket
 import sys
 import json
+import argparse
 from Crypto.Cipher import AES
 from Crypto import Random
 
@@ -29,8 +30,14 @@ def bindSocket():
         print >> sys.stderr, 'Socket error %s' % message
         sys.exit(0)
 
+parser = argparse.ArgumentParser(description='khome')
+parser.add_argument('-r', '--role', action='store', dest='khomeRole', help='select role from collector and harvester')
+results = parser.parse_args()
+
+if results.khomeRole != 'collector' and results.khomeRole != harvester:
+    print 'Go away upizdok'
+    sys.exit()
+
 if bool(getDataFromJSON()["services"]["collector"]["subscribe"]) == True:
     print "True"
     print getDataFromJSON()["services"]["collector"]["collectorPort"]
-else:
-    print 'Huy'
