@@ -9,8 +9,9 @@ from Crypto import Random
 
 def getDataFromJSON(filename):
     try:
-        with open(filename) as sourceFile:
+        with filename as sourceFile:
             data = json.load(sourceFile)
+            sourceFile.close()
             return data
     except IOError as errMessage:
         print >>sys.stderr, "I/O error(%s): %s - %s" % (
@@ -44,6 +45,6 @@ if results.khomeRole == 'collector':
 elif results.khomeRole == 'harvester':
     print('harvester')
 
-if bool(getDataFromJSON(results.filename)["services"]["collector"]["subscribe"]) == True:
+if bool(getDataFromJSON(results.filename)["services"]["RSAgenerator"]["subscribe"]) == True:
     print "True"
     print getDataFromJSON(results.filename)["services"]["collector"]["collectorPort"]
