@@ -7,9 +7,9 @@ import argparse
 from Crypto.Cipher import AES
 from Crypto import Random
 
-def getDataFromJSON():
+def getDataFromJSON(filename):
     try:
-        with open("../../json/default.json") as sourceFile:
+        with open(filename) as sourceFile:
             data = json.load(sourceFile)
             return data
     except IOError as errMessage:
@@ -32,12 +32,18 @@ def bindSocket():
 
 parser = argparse.ArgumentParser(description='khome')
 parser.add_argument('-r', '--role', action='store', dest='khomeRole', help='select role from collector and harvester')
+parser.add_argument('-f', '--file', action='store', dest='filename', nargs='?', type=argparse.FileType('r'), help='Set full path to parsing file')
 results = parser.parse_args()
 
-if results.khomeRole != 'collector' and results.khomeRole != harvester:
+if results.khomeRole != 'collector' and results.khomeRole != 'harvester':
     print 'Go away upizdok'
     sys.exit()
 
-if bool(getDataFromJSON()["services"]["collector"]["subscribe"]) == True:
+if results.khomeRole == 'collector':
+    print('collector')
+elif results.khomeRole == 'harvester':
+    print('harvester')
+
+if bool(getDataFromJSON(results.filename)["services"]["collector"]["subscribe"]) == True:
     print "True"
-    print getDataFromJSON()["services"]["collector"]["collectorPort"]
+    print getDataFromJSON(results.filename)["services"]["collector"]["collectorPort"]
