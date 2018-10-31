@@ -11,7 +11,6 @@ def getDataFromJSON(filename):
     try:
         with filename as sourceFile:
             data = json.load(sourceFile)
-            sourceFile.close()
             return data
     except IOError as errMessage:
         print >>sys.stderr, "I/O error(%s): %s - %s" % (
@@ -45,6 +44,8 @@ if results.khomeRole == 'collector':
 elif results.khomeRole == 'harvester':
     print('harvester')
 
-if bool(getDataFromJSON(results.filename)["services"]["RSAgenerator"]["subscribe"]) == True:
-    print "True"
-    print getDataFromJSON(results.filename)["services"]["collector"]["collectorPort"]
+data = getDataFromJSON(results.filename)
+
+if bool(data["services"]["RSAgenerator"]["subscribe"]) == True:
+    print("True")
+    print(data["services"]["collector"]["collectorPort"])
