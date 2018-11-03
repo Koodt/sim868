@@ -3,12 +3,11 @@
 import git
 
 class GitClass(object):
-    def __init__(self, url, path):
+    def __init__(self):
+
+    def dlRepo(self, url, path):
         self.url = url
         self.path = path
-        self._repo = None
-
-    def dlRepo(self):
         self._repo = git.Repo.clone_from(self.url, self.path)
 
     @property
@@ -19,5 +18,5 @@ class GitClass(object):
 
 
 if __name__ == "__main__":
-    loader = GitClass("https://github.com/Koodt/sim868.git", "/srv/kill")
-    loader.dlRepo()
+    loader = GitClass()
+    loader.dlRepo("https://github.com/Koodt/sim868.git", "/srv/kill")
