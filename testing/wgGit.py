@@ -10,13 +10,19 @@ class GitClass(object):
         self.path = path
         self._repo = git.Repo.clone_from(self.url, self.path)
 
+    def createBranch(self, repo, branch):
+        self.repo = repo
+        self.branch = branch
+        new_branch = self.repo.create_head(self.branch)
+
     @property
     def repo(self):
         if self._repo is None:
-            self.fetch_repo()
+            self.dlRepo()
         return self._repo
 
 
 if __name__ == "__main__":
-    loader = GitClass()
-    loader.dlRepo("https://github.com/Koodt/sim868.git", "/srv/kill")
+    wgClass = GitClass()
+    wgClass.dlRepo("https://github.com/Koodt/sim868.git", "/srv/kill")
+    wgClass.createBranch("/srv/kserver/sim868", "test")
