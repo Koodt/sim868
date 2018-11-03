@@ -19,4 +19,4 @@ class GitClass(object):
 
 
 if __name__ == "__main__":
-    GitClass.dlRepo("https://github.com/Koodt/sim868.git", "D:\kill")
+    GitClass.dlRepo("https://github.com/Koodt/sim868.git", "/srv/kill")
