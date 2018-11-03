@@ -35,14 +35,12 @@ parser.add_argument('-r', '--role', action='store', dest='khomeRole', help='sele
 parser.add_argument('-f', '--file', action='store', dest='filename', nargs='?', type=argparse.FileType('r'), help='Set full path to parsing file')
 results = parser.parse_args()
 
-if results.khomeRole != 'collector' and results.khomeRole != 'harvester':
-    print 'Go away upizdok'
-    sys.exit()
-
 if results.khomeRole == 'collector':
     print('collector')
 elif results.khomeRole == 'harvester':
     print('harvester')
+else:
+    print('What do you want, Jackson?')
 
 data = getDataFromJSON(results.filename)
 
