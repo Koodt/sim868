@@ -20,4 +20,4 @@ class GitClass(object):
 
 if __name__ == "__main__":
     loader = GitClass("https://github.com/Koodt/sim868.git", "/srv/kill")
-    loader()
+    loader.dlRepo()
