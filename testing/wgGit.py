@@ -8,7 +8,7 @@ class GitClass(object):
         self.path = path
         self._repo = None
 
-    def dlRepo(self, url, path):
+    def dlRepo(self):
         self._repo = git.Repo.clone_from(self.url, self.path)
 
     @property
@@ -19,4 +19,4 @@ class GitClass(object):
 
 
 if __name__ == "__main__":
-    GitClass.dlRepo("https://github.com/Koodt/sim868.git", "/srv/kill")
+    GitClass("https://github.com/Koodt/sim868.git", "/srv/kill")
