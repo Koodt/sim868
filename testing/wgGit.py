@@ -8,7 +8,7 @@ class GitClass(object):
         self.path = path
         self._repo = None
 
-    def dlRepo(self):
+    def dlRepo(self, url, path):
         self._repo = git.Repo.clone_from(self.url, self.path)
 
     @property
