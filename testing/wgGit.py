@@ -20,7 +20,7 @@ class GitClass(object):
         self.repoTarget = repoTarget
         self.branch = branch
         self.repoW = self.Repo(self.repoTarget)
-        self.new_branch = self.repoW.heads.master.checkout()
+        self.new_branch = self.repoW.heads.checkout(self.branch)
 
     def selectMasterBranch(self, repoTarget):
         self.repoTarget = repoTarget
@@ -38,4 +38,5 @@ if __name__ == '__main__':
     wgClass = GitClass()
     wgClass.dlRepo('https://github.com/Koodt/sim868.git', '/srv/kill')
     wgClass.createNewBranch('/srv/kill', 'newBranch')
-    wgClass.selectMasterBranch('/srv/kill')
+
+#    wgClass.selectMasterBranch('/srv/kill')
