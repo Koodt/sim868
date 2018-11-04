@@ -15,7 +15,7 @@ class GitClass(object):
         self.repoTarget = repoTarget
         self.branch = branch
         self.repoW = Repo(self.repoTarget)
-        self.new_branch = self.repoW.checkout(self.branch)
+        self.new_branch = self.repoW.heads.master.checkout()
 
     @property
     def repo(self):
