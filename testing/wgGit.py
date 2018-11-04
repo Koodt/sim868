@@ -8,23 +8,23 @@ class GitClass(object):
     def dlRepo(self, url, path):
         self.url = url
         self.path = path
-        self._repo = Repo.clone_from(self.url, self.path)
+        self._repo = self.Repo.clone_from(self.url, self.path)
 
     def createNewBranch(self, repoTarget, branch):
         self.repoTarget = repoTarget
         self.branch = branch
-        self.repoW = Repo(self.repoTarget)
+        self.repoW = self.Repo(self.repoTarget)
         self.new_branch = self.repoW.create_head(self.branch)
 
     def selectNeededBranch(self, repoTarget, branch):
         self.repoTarget = repoTarget
         self.branch = branch
-        self.repoW = Repo(self.repoTarget)
+        self.repoW = self.Repo(self.repoTarget)
         self.new_branch = self.repoW.heads.master.checkout()
 
     def selectMasterBranch(self, repoTarget):
         self.repoTarget = repoTarget
-        self.repoW = Repo(self.repoTarget)
+        self.repoW = self.Repo(self.repoTarget)
         self.new_branch = self.repoW.heads.master.checkout()
 
     @property
