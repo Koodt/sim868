@@ -1,20 +1,20 @@
 #!/usr/bin/python3
 
-from git import Repo
-
 class GitClass(object):
     def __init__(self):
         pass
 
     def dlRepo(self, url, path):
+        from git import Repo
         self.url = url
         self.path = path
         self._repo = Repo.clone_from(self.url, self.path)
 
     def createBranch(self, repoTarget, branch):
+        from git import Repo
         self.repoTarget = repoTarget
         self.branch = branch
-        self.repo = Repo(self.repoTarget.working_tree_dir)
+        self.repo = Repo(self.rorepo.self.repoTarget)
         self.new_branch = self.repo.create_head(self.branch)
 
     @property
