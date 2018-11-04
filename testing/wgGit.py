@@ -25,7 +25,6 @@ class GitClass(object):
 
     def selectMasterBranch(self, repoTarget):
         self.repoTarget = repoTarget
-        self.branch = branch
         self.repoW = Repo(self.repoTarget)
         self.new_branch = self.repoW.heads.master.checkout()
 
