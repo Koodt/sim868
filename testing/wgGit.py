@@ -10,18 +10,18 @@ class GitClass(object):
         self.path = path
         self._repo = self.Repo.clone_from(self.url, self.path)
 
-    def createNewBranch(self, repoTarget, branch):
+    def createAndSelectNewBranch(self, repoTarget, branch):
         self.repoTarget = repoTarget
         self.branch = branch
         self.repoW = self.Repo(self.repoTarget)
-        self.new_branch = self.repoW.create_head(self.branch)
+        self.newBranch = self.repoW.create_head(self.branch)
         self.branchSwitch = self.repoW.git.checkout(self.branch)
 
     def selectNeededBranch(self, repoTarget, branch):
         self.repoTarget = repoTarget
         self.branch = branch
         self.repoW = self.Repo(self.repoTarget)
-        self.new_branch = self.repoW.heads.self.branch.checkout()
+        self.branchSwitch = self.repoW.git.checkout(self.branch)
 
     def selectMasterBranch(self, repoTarget):
         self.repoTarget = repoTarget
@@ -37,7 +37,7 @@ class GitClass(object):
 
 if __name__ == '__main__':
     wgClass = GitClass()
-#    wgClass.dlRepo('https://github.com/Koodt/sim868.git', '/srv/kill')
-    wgClass.createNewBranch('/srv/kill', 'morenewBranch')
+    wgClass.dlRepo('https://github.com/Koodt/sim868.git', '/srv/kill')
+    wgClass.createAndSelectNewBranch('/srv/kill', 'morenewBranch')
 #    wgClass.selectNeededBranch('/srv/kill', 'newBranch')
 #    wgClass.selectMasterBranch('/srv/kill')
