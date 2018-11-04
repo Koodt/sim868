@@ -14,7 +14,7 @@ class GitClass(object):
     def createBranch(self, targetRepo, branch):
         self.repoTarget = targetRepo
         self.branch = branch
-        self.repo = Repo(self.rorepo.self.targetRepo)
+        self.repo = Repo(Repo.rorepo.self.targetRepo)
         self.new_branch = self.repo.create_head(self.branch)
 
     @property
