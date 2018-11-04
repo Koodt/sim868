@@ -11,7 +11,7 @@ class GitClass(object):
         self.path = path
         self._repo = Repo.clone_from(self.url, self.path)
 
-    def createBranch(self, repoTarget, branch):
+    def selectMasterBranch(self, repoTarget, branch):
         self.repoTarget = repoTarget
         self.branch = branch
         self.repoW = Repo(self.repoTarget)
@@ -26,5 +26,5 @@ class GitClass(object):
 
 if __name__ == '__main__':
     wgClass = GitClass()
-#    wgClass.dlRepo("https://github.com/Koodt/sim868.git", "/srv/kill")
-    wgClass.createBranch('/srv/kill', 'testingW')
+    wgClass.dlRepo("https://github.com/Koodt/sim868.git", "/srv/kill")
+    wgClass.selectMasterBranch('/srv/kill')
