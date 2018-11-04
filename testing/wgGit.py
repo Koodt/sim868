@@ -27,4 +27,4 @@ class GitClass(object):
 if __name__ == '__main__':
     wgClass = GitClass()
 #    wgClass.dlRepo("https://github.com/Koodt/sim868.git", "/srv/kill")
-    wgClass.createBranch('/srv/kserver/sim868', 'testingW')
+    wgClass.createBranch('/srv/kill', 'testingW')
