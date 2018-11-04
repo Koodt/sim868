@@ -38,5 +38,5 @@ if __name__ == '__main__':
     wgClass = GitClass()
 #    wgClass.dlRepo('https://github.com/Koodt/sim868.git', '/srv/kill')
 #    wgClass.createNewBranch('/srv/kill', 'newBranch')
-    wgClass.selectNeededBranch('newBranch')
+    wgClass.selectNeededBranch('/srv/kill', 'newBranch')
 #    wgClass.selectMasterBranch('/srv/kill')
