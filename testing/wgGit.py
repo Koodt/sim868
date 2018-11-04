@@ -3,6 +3,7 @@
 class GitClass(object):
     def __init__(self):
         from git import Repo
+        self.Repo = Repo
 
     def dlRepo(self, url, path):
         self.url = url
