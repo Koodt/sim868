@@ -11,10 +11,10 @@ class GitClass(object):
         self.path = path
         self._repo = Repo.clone_from(self.url, self.path)
 
-    def createBranch(self, targetRepo, branch):
-        self.repoTarget = targetRepo
+    def createBranch(self, repoTarget, branch):
+        self.repoTarget = repoTarget
         self.branch = branch
-        self.repo = Repo(self.targetRepo.working_tree_dir)
+        self.repo = Repo(self.repoTarget.working_tree_dir)
         self.new_branch = self.repo.create_head(self.branch)
 
     @property
