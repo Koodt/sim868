@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 
-from git import Repo
-
 class GitClass(object):
+    from git import Repo
     def __init__(self):
         pass
 
