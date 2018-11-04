@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import git
+from git import Repo
 
 class GitClass(object):
     def __init__(self):
@@ -9,12 +9,13 @@ class GitClass(object):
     def dlRepo(self, url, path):
         self.url = url
         self.path = path
-        self._repo = git.Repo.clone_from(self.url, self.path)
+        self._repo = Repo.clone_from(self.url, self.path)
 
     def createBranch(self, targetRepo, branch):
         self.repoTarget = targetRepo
         self.branch = branch
-        self.new_branch = self.repoTarget.create_head(self.branch)
+        self.repo = Repo(self.rorepo.self.targetRepo)
+        self.new_branch = self.repo.create_head(self.branch)
 
     @property
     def repo(self):
