@@ -15,7 +15,7 @@ class GitClass(object):
         self.repoTarget = repoTarget
         self.branch = branch
         self.repoW = Repo(self.repoTarget)
-        self.new_branch = self.repoW.create_head(self.branch)
+        self.new_branch = self.repoW.checkout(self.branch)
 
     @property
     def repo(self):
@@ -27,4 +27,4 @@ class GitClass(object):
 if __name__ == '__main__':
     wgClass = GitClass()
 #    wgClass.dlRepo("https://github.com/Koodt/sim868.git", "/srv/kill")
-    wgClass.createBranch('/srv/kserver/sim868', 'test')
+    wgClass.createBranch('/srv/kserver/sim868', 'testingW')
