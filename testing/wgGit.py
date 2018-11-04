@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 class GitClass(object):
-    from git import Repo
     def __init__(self):
+        from git import Repo
         pass
 
     def dlRepo(self, url, path):
