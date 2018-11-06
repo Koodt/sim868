@@ -6,7 +6,7 @@ import json
 import argparse
 from Crypto.Cipher import AES
 from Crypto import Random
-from khomeGen import createKeysPair
+from kLibs import createKeysPair, defaultDir
 
 def getDataFromJSON(filename):
     try:
