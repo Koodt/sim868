@@ -1,10 +1,6 @@
-#!/usr/bin/python
-import sys
-import json
-from Crypto.PublicKey import RSA
-from Crypto import Random
-
 def createKeysPair():
+    from Crypto.PublicKey import RSA
+    from Crypto import Random
     randomGenerator = Random.new().read
     privateKey = RSA.generate(1024, randomGenerator)
     publicKey = privateKey.publickey()
@@ -13,3 +9,6 @@ def createKeysPair():
 
     with open("public.pem", "w") as publicFile:
         print >> publicFile, publicKey.exportKey()
+
+def defaultDir():
+    import os
