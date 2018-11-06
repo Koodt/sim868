@@ -1,14 +1,18 @@
-def createKeysPair():
-    from Crypto.PublicKey import RSA
-    from Crypto import Random
-    randomGenerator = Random.new().read
-    privateKey = RSA.generate(1024, randomGenerator)
-    publicKey = privateKey.publickey()
-    with open("private.pem", "w") as privateFile:
-        print >> privateFile, privateKey.exportKey()
+class Khome(object):
+    def __init__(self):
+        pass
 
-    with open("public.pem", "w") as publicFile:
-        print >> publicFile, publicKey.exportKey()
+    def createKeysPair(self):
+        from Crypto.PublicKey import RSA
+        from Crypto import Random
+        randomGenerator = Random.new().read
+        privateKey = RSA.generate(1024, randomGenerator)
+        publicKey = privateKey.publickey()
+        with open("private.pem", "w") as privateFile:
+            print >> privateFile, privateKey.exportKey()
 
-def defaultDir():
-    import os
+        with open("public.pem", "w") as publicFile:
+            print >> publicFile, publicKey.exportKey()
+
+    def defaultDir(self):
+        import os
