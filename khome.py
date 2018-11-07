@@ -37,8 +37,10 @@ parser.add_argument('-f', '--file', action='store', dest='filename', nargs='?', 
 parser.add_argument('-k', '--key', action='store_true', help='create keys pair')
 results = parser.parse_args()
 
+defaultDir('/opt/khome/defaults/')
+
 if results.key:
-    createKeysPair()
+    createKeysPair('/opt/khome/defaults/')
 
 if results.khomeRole == 'collector':
     print('collector')
