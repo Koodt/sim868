@@ -1,11 +1,7 @@
 #!/usr/bin/python3
 
-import socket
 import sys
-import json
 import argparse
-from Crypto.Cipher import AES
-from Crypto import Random
 from kLibs import Kdefault, Binder, Kjson
 
 parser = argparse.ArgumentParser(description='khome')
@@ -28,7 +24,7 @@ if results.key:
     defaultConf.createKeysPair()
 
 if results.khomeRole == 'collector':
-    getCollector = Binder(getDataJSON)
+    getCollector = Binder(getDataJSON).setConnection()
     print('collector')
 elif results.khomeRole == 'harvester':
     print('harvester')

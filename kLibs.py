@@ -50,11 +50,15 @@ class Binder(object):
         self.dataJSON = dataJSON
 
     def setConnection(self):
+        import socket
+        import time
+        import sys
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        serverAddress = ('', int(self.dataJSONdata["services"]["collector"]["collectorPort"]))
+        serverAddress = ('', int(self.dataJSON["services"]["collector"]["collectorPort"]))
         print('starting up on %s port %s' % serverAddress)
         try:
             sock.bind(serverAddress)
+            print('Started on %s port %s' % serverAddress)
         except socket.error as message:
             print >> sys.stderr, 'Socket error %s' % message
             sys.exit(0)
