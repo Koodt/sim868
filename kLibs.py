@@ -29,3 +29,9 @@ class Kdefault(object):
             os.makedirs(self.path)
         else:
             print('%s exists' % self.path)
+
+    def generateDefaultJSON(self):
+        import json
+        data = {"services":{"collector":{"collectorPort":27072,"collectorHost":"k0dt.ru"},"harvester":{"AESkey":"f861feab561441c0e1fdcba91581dd95"}}}
+        with open(self.path + 'default.json', 'w') as defaultJSON:
+            print >> defaultJSON, json.dumps(data)
