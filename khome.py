@@ -16,7 +16,7 @@ parser.add_argument('-d', '--default', action='store_true', help='create default
 results = parser.parse_args()
 
 defaultConf = Kdefault('/opt/khome/defaults/')
-getDataJSON = Kjson('/opt/khome/defaults/default.json')
+getDataJSON = Kjson('/opt/khome/defaults/default.json').getJSONdata()
 
 if results.default:
     defaultConf.removeDefaultDir()
@@ -36,8 +36,8 @@ else:
     print('What do you want, Jackson?')
     sys.exit()
 
-data = Kjson(results.filename)
+#data = Kjson(results.filename)
 
-if bool(data["services"]["RSAgenerator"]["subscribe"]) == True:
-    print("True")
-    print(data["services"]["collector"]["collectorPort"])
+#if bool(data["services"]["RSAgenerator"]["subscribe"]) == True:
+#    print("True")
+#    print(data["services"]["collector"]["collectorPort"])
