@@ -44,3 +44,29 @@ class Kdefault(object):
         }
         with open(self.path + "default.json", "w") as defaultJSON:
             print >> defaultJSON, json.dumps(data)
+
+class Binder(object):
+    def __init__(self):
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        serverAddress = ('', int(getDataFromJSON()["targetPort"]))
+        print 'starting up on %s port %s' % serverAddress
+        try:
+            sock.bind(serverAddress)
+        except socket.error as message:
+            print >> sys.stderr, 'Socket error %s' % message
+            sys.exit(0)
+
+class Kjson(object):
+    def __init__(self, filename):
+        self.filename = filename
+        try:
+            with self.filename as sourceFile:
+                data = json.load(sourceFile)
+                return data
+        except IOError as errMessage:
+            print >>sys.stderr, "I/O error(%s): %s - %s" % (
+                errMessage.errno,
+                errMessage.filename,
+                errMessage.strerror,
+            )
+            sys.exit(0)
