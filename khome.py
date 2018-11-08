@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import socket
 import sys
@@ -16,6 +16,7 @@ parser.add_argument('-d', '--default', action='store_true', help='create default
 results = parser.parse_args()
 
 defaultConf = Kdefault('/opt/khome/defaults/')
+getDataJSON = Kjson('/opt/khome/defaults/default.json')
 
 if results.default:
     defaultConf.removeDefaultDir()
@@ -27,6 +28,7 @@ if results.key:
     defaultConf.createKeysPair()
 
 if results.khomeRole == 'collector':
+    getCollector = Binder(getDataJSON)
     print('collector')
 elif results.khomeRole == 'harvester':
     print('harvester')
