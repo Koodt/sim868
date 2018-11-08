@@ -45,7 +45,7 @@ class Kdefault(object):
         with open(self.path + "default.json", "w") as defaultJSON:
             print >> defaultJSON, json.dumps(data)
 
-class Binder(object):
+class KSocket(object):
     def __init__(self, dataJSON):
         self.dataJSON = dataJSON
 
@@ -62,6 +62,30 @@ class Binder(object):
         except socket.error as message:
             print >> sys.stderr, 'Socket error %s' % message
             sys.exit(0)
+
+        sock.listen(1)
+
+        while True:
+            print('waiting for connection')
+            try:
+                connection, client_address = sock.accept()
+
+                try:
+                    print('connection from', client_address)
+
+                    data = connection.recv(32)
+                    decryptMessage = decryptData(data)
+                    if '1111111111111111' in decryptMessage:
+                        sys.exit(0)
+                    print('received "%s"' % decryptMessage)
+                finally:
+                    connection.close()
+            except SystemExit:
+                print('System exit')
+                sys.exit(0)
+            except KeyboardInterrupt:
+                print('From keyboard')
+                sys.exit(0)
 
 class Kjson(object):
     def __init__(self, pathJSON):
