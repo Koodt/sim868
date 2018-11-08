@@ -60,11 +60,15 @@ class Binder(object):
             sys.exit(0)
 
 class Kjson(object):
-    def __init__(self, fileJSON):
-        from json import load
-        self.fileJSON = fileJSON
+    def __init__(self, pathJSON):
+        self.pathJSON = pathJSON
+
+    def getJSONdata(self):
+        import json
         try:
-            data = load(self.fileJSON)
+            fileJSON = open(self.pathJSON, 'r').read()
+            data = json.loads(fileJSON)
+            print(data["services"]["collector"]["collectorPort"])
             return data
         except IOError as errMessage:
             print >> sys.stderr, "I/O error(%s): %s - %s" % (
