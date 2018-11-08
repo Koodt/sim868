@@ -46,10 +46,13 @@ class Kdefault(object):
             print >> defaultJSON, json.dumps(data)
 
 class Binder(object):
-    def __init__(self):
+    def __init__(self, dataJSON):
+        self.dataJSON = dataJSON
+
+    def setConnection(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        serverAddress = ('', int(getDataFromJSON()["targetPort"]))
-        print 'starting up on %s port %s' % serverAddress
+        serverAddress = ('', int(self.dataJSONdata["services"]["collector"]["collectorPort"]))
+        print('starting up on %s port %s' % serverAddress)
         try:
             sock.bind(serverAddress)
         except socket.error as message:
@@ -57,14 +60,14 @@ class Binder(object):
             sys.exit(0)
 
 class Kjson(object):
-    def __init__(self, filename):
-        self.filename = filename
+    def __init__(self, fileJSON):
+        from json import load
+        self.fileJSON = fileJSON
         try:
-            with self.filename as sourceFile:
-                data = json.load(sourceFile)
-                return data
+            data = load(self.fileJSON)
+            return data
         except IOError as errMessage:
-            print >>sys.stderr, "I/O error(%s): %s - %s" % (
+            print >> sys.stderr, "I/O error(%s): %s - %s" % (
                 errMessage.errno,
                 errMessage.filename,
                 errMessage.strerror,
