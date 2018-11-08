@@ -2,7 +2,7 @@
 
 import sys
 import argparse
-from kLibs import Kdefault, Binder, Kjson
+from kLibs import Kdefault, KSocket, Kjson
 
 parser = argparse.ArgumentParser(description='khome')
 parser.add_argument('-r', '--role', action='store', dest='khomeRole', help='select role from collector and harvester')
@@ -24,7 +24,7 @@ if results.key:
     defaultConf.createKeysPair()
 
 if results.khomeRole == 'collector':
-    getCollector = Binder(getDataJSON).setConnection()
+    getCollector = KSocket(getDataJSON).setConnection()
     print('collector')
 elif results.khomeRole == 'harvester':
     print('harvester')
