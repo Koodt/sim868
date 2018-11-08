@@ -44,6 +44,7 @@ if results.default:
     defaultConf.removeDefaultDir()
     defaultConf.createDefaultDir()
     defaultConf.createKeysPair()
+    defaultConf.generateDefaultJSON()
 
 if results.key:
     defaultConf.createKeysPair()
