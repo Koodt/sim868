@@ -2,19 +2,6 @@ class Kdefault(object):
     def __init__(self, path):
         self.path = path
 
-    def createKeysPair(self):
-        from Crypto.PublicKey import RSA
-        from Crypto import Random
-
-        randomGenerator = Random.new().read
-        privateKey = RSA.generate(1024, randomGenerator)
-        publicKey = privateKey.publickey()
-        with open(self.path + "private.pem", "w") as privateFile:
-            print >> privateFile, privateKey.exportKey()
-
-        with open(self.path + "public.pem", "w") as publicFile:
-            print >> publicFile, publicKey.exportKey()
-
     def removeDefaultDir(self):
         import os, shutil
 
@@ -43,7 +30,7 @@ class Kdefault(object):
             }
         }
         with open(self.path + "default.json", "w") as defaultJSON:
-            print >> defaultJSON, json.dumps(data)
+            json.dumps(data, defaultJSON)
 
 class KSocket(object):
     def __init__(self, dataJSON):
@@ -93,15 +80,53 @@ class Kjson(object):
 
     def getJSONdata(self):
         import json
+        import sys
+
         try:
             fileJSON = open(self.pathJSON, 'r').read()
             data = json.loads(fileJSON)
             print(data["services"]["collector"]["collectorPort"])
             return data
         except IOError as errMessage:
-            print >> sys.stderr, "I/O error(%s): %s - %s" % (
+            print('I/O error(%s): %s - %s' % (
                 errMessage.errno,
                 errMessage.filename,
                 errMessage.strerror,
-            )
+            ))
             sys.exit(0)
+
+class Kcrypto(object):
+    def __init__(self, path):
+        self.path = path
+
+    def checkExists(self, neededFile):
+        from pathlib import Path
+
+        if Path(self.path + neededFile).exists():
+            return True
+        else:
+            return False
+
+    def createKeysPair(self):
+        from Crypto.PublicKey import RSA
+        from Crypto import Random
+        from pathlib import Path
+
+        prvFile = 'private.pem'
+        pubFile = 'public.pem'
+        randomGenerator = Random.new().read
+
+        privateKey = RSA.generate(1024, randomGenerator)
+        publicKey = privateKey.publickey()
+
+        if not self.checkExists(prvFile):
+            with open(self.path + prvFile, 'w') as privateFile:
+                print >> privateFile, privateKey.exportKey()
+        else:
+            print('%s exists' % prvFile)
+
+        if not self.checkExists(pubFile):
+            with open(self.path + pubFile, 'w') as publicFile:
+                print >> publicFile, publicKey.exportKey()
+        else:
+            print('%s exists' % pubFile)
