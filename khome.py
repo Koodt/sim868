@@ -2,7 +2,7 @@
 
 import sys
 import argparse
-from kLibs import Kdefault, KSocket, Kjson
+from kLibs import Kdefault, KSocket, Kjson, Kcrypto
 
 parser = argparse.ArgumentParser(description='khome')
 parser.add_argument('-r', '--role', action='store', dest='khomeRole', help='select role from collector and harvester')
@@ -11,17 +11,19 @@ parser.add_argument('-k', '--key', action='store_true', help='create keys pair')
 parser.add_argument('-d', '--default', action='store_true', help='create default configs and dir. ATTENTION!!! REMOVE OLD!!!')
 results = parser.parse_args()
 
-defaultConf = Kdefault('/opt/khome/defaults/')
-getDataJSON = Kjson('/opt/khome/defaults/default.json').getJSONdata()
+defaultPath = '/opt/khome/defaults/'
+defaultConf = Kdefault(defaultPath)
+
 
 if results.default:
     defaultConf.removeDefaultDir()
     defaultConf.createDefaultDir()
-    defaultConf.createKeysPair()
     defaultConf.generateDefaultJSON()
 
+getDataJSON = Kjson('/opt/khome/defaults/default.json').getJSONdata()
+
 if results.key:
-    defaultConf.createKeysPair()
+    Kcrypto(defaultPath).createKeysPair()
 
 if results.khomeRole == 'collector':
     getCollector = KSocket(getDataJSON).setConnection()
