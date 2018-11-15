@@ -121,12 +121,12 @@ class Kcrypto(object):
 
         if not self.checkExists(prvFile):
             with open(self.path + prvFile, 'w') as privateFile:
-                print >> privateFile, privateKey.exportKey()
+                print(privateFile, privateKey.exportKey())
         else:
             print('%s exists' % prvFile)
 
         if not self.checkExists(pubFile):
             with open(self.path + pubFile, 'w') as publicFile:
-                print >> publicFile, publicKey.exportKey()
+                print(publicFile, publicKey.exportKey())
         else:
             print('%s exists' % pubFile)
