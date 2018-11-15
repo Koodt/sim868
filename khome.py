@@ -20,10 +20,10 @@ if results.default:
     defaultConf.createDefaultDir()
     defaultConf.generateDefaultJSON()
 
-getDataJSON = Kjson('/opt/khome/defaults/default.json').getJSONdata()
-
 if results.key:
     Kcrypto(defaultPath).createKeysPair()
+
+getDataJSON = Kjson('/opt/khome/defaults/default.json').getJSONdata()
 
 if results.khomeRole == 'collector':
     getCollector = KSocket(getDataJSON).setConnection()
@@ -33,6 +33,7 @@ elif results.khomeRole == 'harvester':
 else:
     print('What do you want, Jackson?')
     sys.exit()
+
 
 #data = Kjson(results.filename)
 
