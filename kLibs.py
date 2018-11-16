@@ -4,7 +4,6 @@ class Kdefault(object):
 
     def removeDefaultDir(self):
         import os, shutil
-
         if os.path.exists(self.path):
             print("removing %s" % self.path)
             shutil.rmtree(self.path, ignore_errors=True)
@@ -13,7 +12,6 @@ class Kdefault(object):
 
     def createDefaultDir(self):
         import os
-
         if not os.path.exists(self.path):
             print("creating %s" % self.path)
             os.makedirs(self.path)
@@ -21,7 +19,7 @@ class Kdefault(object):
             print("%s exists" % self.path)
 
     def generateDefaultJSON(self):
-        import json
+        import json, os
 
         data = {
             "services": {
@@ -29,8 +27,11 @@ class Kdefault(object):
                 "harvester": {"AESkey": "f861feab561441c0e1fdcba91581dd95"},
             }
         }
-        with open(self.path + "default.json", "w") as defaultJSON:
-            json.dumps(data, defaultJSON)
+
+        if not os.path.isfile(self.path + 'default.json'):
+            os.mknod(self.path + 'default.json')
+        with open(self.path + 'default.json', 'w') as defaultJSON:
+            json.dump(data, defaultJSON)
 
 class KSocket(object):
     def __init__(self, dataJSON):
@@ -99,18 +100,11 @@ class Kcrypto(object):
     def __init__(self, path):
         self.path = path
 
-    def checkExists(self, neededFile):
-        from pathlib import Path
-
-        if Path(self.path + neededFile).exists():
-            return True
-        else:
-            return False
-
     def createKeysPair(self):
         from Crypto.PublicKey import RSA
         from Crypto import Random
         from pathlib import Path
+        import os
 
         prvFile = 'private.pem'
         pubFile = 'public.pem'
@@ -119,13 +113,13 @@ class Kcrypto(object):
         privateKey = RSA.generate(1024, randomGenerator)
         publicKey = privateKey.publickey()
 
-        if not self.checkExists(prvFile):
+        if not os.path.isfile(self.path + prvFile):
             with open(self.path + prvFile, 'w') as privateFile:
                 print(privateFile, privateKey.exportKey())
         else:
             print('%s exists' % prvFile)
 
-        if not self.checkExists(pubFile):
+        if not os.path.isfile(self.path + pubFile):
             with open(self.path + pubFile, 'w') as publicFile:
                 print(publicFile, publicKey.exportKey())
         else:
