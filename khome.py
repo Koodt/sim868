@@ -12,18 +12,19 @@ parser.add_argument('-d', '--default', action='store_true', help='create default
 results = parser.parse_args()
 
 defaultPath = '/opt/khome/defaults/'
+defaultJSON = 'default.json'
 defaultConf = Kdefault(defaultPath)
 
 
 if results.default:
     defaultConf.removeDefaultDir()
     defaultConf.createDefaultDir()
-    defaultConf.generateDefaultJSON()
+    defaultConf.generateDefaultJSON(defaultJSON)
 
 if results.key:
     Kcrypto(defaultPath).createKeysPair()
 
-getDataJSON = Kjson('/opt/khome/defaults/default.json').getJSONdata()
+getDataJSON = Kjson(defaultPath + defaultJSON).getJSONdata()
 
 if results.khomeRole == 'collector':
     getCollector = KSocket(getDataJSON).setConnection()
