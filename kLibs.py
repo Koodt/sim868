@@ -108,6 +108,20 @@ class Kcrypto(object):
         from pathlib import Path
         import os
 
+        def checkAndCreateKey(createPath, createFile, createKey):
+            def creatingKey(createPath, createFile, createKey):
+                with open(createPath + createFile, 'w') as keyFile:
+                    print(createKey.exportKey(format = 'PEM', pkcs = 1), file = keyFile)
+            if os.path.isfile(createPath + createFile):
+                answer = input('Key exist. Rewrite key? [y/N]: ')
+                if answer.lower() == 'y' or answer.lower() == 'yes':
+                    creatingKey(createPath, createFile, createKey)
+                else:
+                    print('Creating file was canceled by user')
+            else:
+                creatingKey(createPath, createFile, createKey)
+
+
         prvFile = 'private.pem'
         pubFile = 'public.pem'
         randomGenerator = Random.new().read
@@ -115,14 +129,5 @@ class Kcrypto(object):
         privateKey = RSA.generate(1024, randomGenerator)
         publicKey = privateKey.publickey()
 
-        if not os.path.isfile(self.path + prvFile):
-            with open(self.path + prvFile, 'w') as privateFile:
-                print(privateKey.exportKey(), file = privateFile)
-        else:
-            print('%s exists' % prvFile)
-
-        if not os.path.isfile(self.path + pubFile):
-            with open(self.path + pubFile, 'w') as publicFile:
-                print(publicKey.exportKey(), file = publicFile)
-        else:
-            print('%s exists' % pubFile)
+        checkAndCreateKey(self.path, prvFile, privateKey)
+        checkAndCreateKey(self.path, pubFile, publicKey)
