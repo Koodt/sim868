@@ -2,6 +2,7 @@
 
 import sys
 import argparse
+import os
 from kLibs import Kdefault, KSocket, Kjson, Kcrypto
 
 parser = argparse.ArgumentParser(description='khome')
@@ -15,6 +16,9 @@ defaultPath = '/opt/khome/defaults/'
 defaultJSON = 'default.json'
 defaultConf = Kdefault(defaultPath)
 
+if not os.path.isfile(defaultPath + defaultJSON) and not results.default:
+    print('Config not exist')
+    sys.exit()
 
 if results.default:
     defaultConf.removeDefaultDir()
@@ -34,7 +38,6 @@ elif results.khomeRole == 'harvester':
 else:
     print('What do you want, Jackson?')
     sys.exit()
-
 
 #data = Kjson(results.filename)
 
