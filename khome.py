@@ -32,9 +32,9 @@ getDataJSON = Kjson(defaultPath + defaultJSON).getJSONdata()
 
 if results.khomeRole == 'collector':
     getCollector = KSocket(getDataJSON).setConnection()
-    print('collector')
 elif results.khomeRole == 'harvester':
-    print('harvester')
+    some code...
+    more some code...
 else:
     print('What do you want, Michael Jackson?')
     sys.exit()
