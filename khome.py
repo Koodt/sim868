@@ -36,7 +36,7 @@ if results.khomeRole == 'collector':
 elif results.khomeRole == 'harvester':
     print('harvester')
 else:
-    print('What do you want, Jackson?')
+    print('What do you want, Michael Jackson?')
     sys.exit()
 
 #data = Kjson(results.filename)
