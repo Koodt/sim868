@@ -5,18 +5,26 @@ class Kdefault(object):
     def removeDefaultDir(self):
         import os, shutil
         if os.path.exists(self.path):
-            print("removing %s" % self.path)
+            print("[---] Removing %s" % self.path)
             shutil.rmtree(self.path, ignore_errors=True)
         else:
-            print("%s not exists" % self.path)
+            print("[ - ] %s not exists" % self.path)
 
     def createDefaultDir(self):
-        import os
+        import os, sys
         if not os.path.exists(self.path):
-            print("creating %s" % self.path)
-            os.makedirs(self.path)
+            try:
+                print("[+++] creating %s" % self.path)
+                os.makedirs(self.path)
+            except IOError as errMessage:
+                print('[!!!] Error(%s): %s - %s' % (
+                    errMessage.errno,
+                    errMessage.filename,
+                    errMessage.strerror,
+                ))
+                sys.exit(0)
         else:
-            print("%s exists" % self.path)
+            print("[+!+] %s exists" % self.path)
 
     def generateDefaultJSON(self, defaultFile):
         self.defaultFile = self.path + defaultFile
@@ -38,16 +46,16 @@ class KSocket(object):
     def __init__(self, dataJSON):
         self.dataJSON = dataJSON
 
-    def setConnection(self):
+    def startListener(self):
         import socket
         import time
         import sys
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         serverAddress = ('', int(self.dataJSON["services"]["collector"]["collectorPort"]))
-        print('starting up on %s port %s' % serverAddress)
+        print('[...] Starting up on %s port %s' % serverAddress)
         try:
             sock.bind(serverAddress)
-            print('Started on %s port %s' % serverAddress)
+            print('[ + ] Started on %s port %s' % serverAddress)
         except socket.error as message:
             print >> sys.stderr, 'Socket error %s' % message
             sys.exit(0)
@@ -55,26 +63,34 @@ class KSocket(object):
         sock.listen(1)
 
         while True:
-            print('waiting for connection')
+            print('[...] Waiting for connection')
             try:
                 connection, client_address = sock.accept()
 
                 try:
-                    print('connection from', client_address)
+                    print('[ + ] Connection from', client_address)
 
                     data = connection.recv(32)
                     decryptMessage = decryptData(data)
                     if '1111111111111111' in decryptMessage:
                         sys.exit(0)
-                    print('received "%s"' % decryptMessage)
+                    print('[ + ] Received "%s"' % decryptMessage)
                 finally:
                     connection.close()
             except SystemExit:
-                print('System exit')
+                print('[ ! ] System exit')
                 sys.exit(0)
             except KeyboardInterrupt:
-                print('From keyboard')
+                print('[ ! ] From keyboard')
                 sys.exit(0)
+
+    def setConnection(self):
+        try:
+            sock = socket.create_connection((targetHost, targetPort))
+        except socket.error as errMessage:
+            print >>sys.stderr, "[!!!] Socket error(%s): %s" % (errMessage.errno, errMessage.strerror)
+            sys.exit(0)
+
 
 class Kjson(object):
     def __init__(self, pathJSON):
@@ -91,7 +107,7 @@ class Kjson(object):
             #print(data["services"]["collector"]["collectorPort"])
             return data
         except IOError as errMessage:
-            print('I/O error(%s): %s - %s' % (
+            print('[!!!] Error(%s): %s - %s' % (
                 errMessage.errno,
                 errMessage.filename,
                 errMessage.strerror,
@@ -113,11 +129,11 @@ class Kcrypto(object):
                 with open(createPath + createFile, 'w') as keyFile:
                     print(createKey.exportKey(format = 'PEM', pkcs = 1), file = keyFile)
             if os.path.isfile(createPath + createFile):
-                answer = input('Key exist. Rewrite key? [y/N]: ')
+                answer = input('[ ! ] Key exist. Rewrite key? [y/N]: ')
                 if answer.lower() == 'y' or answer.lower() == 'yes':
                     creatingKey(createPath, createFile, createKey)
                 else:
-                    print('Creating file was canceled by user')
+                    print('[ ! ]Creating file was canceled by user')
             else:
                 creatingKey(createPath, createFile, createKey)
 
