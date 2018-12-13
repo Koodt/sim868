@@ -16,6 +16,10 @@ defaultPath = '/opt/khome/defaults/'
 defaultJSON = 'default.json'
 defaultConf = Kdefault(defaultPath)
 
+if len(sys.argv) < 2:
+    parser.print_help()
+    sys.exit()
+
 if not os.path.isfile(defaultPath + defaultJSON) and not results.default:
     print('Config not exist')
     sys.exit()
@@ -33,11 +37,8 @@ getDataJSON = Kjson(defaultPath + defaultJSON).getJSONdata()
 
 if results.khomeRole == 'collector':
     startCollector = KSocket(getDataJSON).startListener()
-elif results.khomeRole == 'harvester':
-    startHarbester = KSocket(getDataJSON).setConnection()
-else:
-    print('What do you want, Michael Jackson?')
-    sys.exit()
+if results.khomeRole == 'harvester':
+    startHarvester = KSocket(getDataJSON).setConnection()
 
 #data = Kjson(results.filename)
 
