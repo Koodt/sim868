@@ -50,6 +50,11 @@ class KSocket(object):
         import socket
         import time
         import sys
+
+        def decryptData(message):
+            decryptText = obj.decrypt(message)
+            return decryptText
+
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         serverAddress = ('', int(self.dataJSON["services"]["collector"]["collectorPort"]))
         print('[...] Starting up on %s port %s' % serverAddress)
@@ -57,7 +62,7 @@ class KSocket(object):
             sock.bind(serverAddress)
             print('[ + ] Started on %s port %s' % serverAddress)
         except socket.error as message:
-            print >> sys.stderr, 'Socket error %s' % message
+            print('Socket error %s' % message)
             sys.exit(0)
 
         sock.listen(1)
@@ -69,12 +74,6 @@ class KSocket(object):
 
                 try:
                     print('[ + ] Connection from', client_address)
-
-                    data = connection.recv(32)
-                    decryptMessage = decryptData(data)
-                    if '1111111111111111' in decryptMessage:
-                        sys.exit(0)
-                    print('[ + ] Received "%s"' % decryptMessage)
                 finally:
                     connection.close()
             except SystemExit:
@@ -85,10 +84,15 @@ class KSocket(object):
                 sys.exit(0)
 
     def setConnection(self):
+        import socket
+        import sys
         try:
-            sock = socket.create_connection((targetHost, targetPort))
+            sock = socket.create_connection((self.dataJSON["services"]["collector"]["collectorHost"], self.dataJSON["services"]["collector"]["collectorPort"]))
         except socket.error as errMessage:
-            print >>sys.stderr, "[!!!] Socket error(%s): %s" % (errMessage.errno, errMessage.strerror)
+            print('[!!!] Socket error(%s): %s' % (
+                errMessage.errno,
+                errMessage.strerror
+                ))
             sys.exit(0)
 
 
@@ -147,3 +151,10 @@ class Kcrypto(object):
 
         checkAndCreateKey(self.path, prvFile, privateKey)
         checkAndCreateKey(self.path, pubFile, publicKey)
+
+    def getCrypto(self):
+        data = connection.recv(32)
+        decryptMessage = decryptData(data)
+        if '1111111111111111' in decryptMessage:
+            sys.exit(0)
+        print('[ + ] Received "%s"' % decryptMessage)
