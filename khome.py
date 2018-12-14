@@ -42,9 +42,3 @@ elif results.khomeRole == 'harvester':
 else:
     print('[ ! ] Role not known')
     sys.exit()    
-
-#data = Kjson(results.filename)
-
-#if bool(data["services"]["RSAgenerator"]["subscribe"]) == True:
-#    print("True")
-#    print(data["services"]["collector"]["collectorPort"])
