@@ -37,8 +37,11 @@ getDataJSON = Kjson(defaultPath + defaultJSON).getJSONdata()
 
 if results.khomeRole == 'collector':
     startCollector = KSocket(getDataJSON).startListener()
-if results.khomeRole == 'harvester':
+elif results.khomeRole == 'harvester':
     startHarvester = KSocket(getDataJSON).setConnection()
+else:
+    print('[ ! ] Role not known')
+    sys.exit()    
 
 #data = Kjson(results.filename)
 
