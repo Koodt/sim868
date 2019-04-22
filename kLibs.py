@@ -32,7 +32,7 @@ class Kdefault(object):
 
         data = {
             "services": {
-                "kserver": {"serverPort": 27072, "serverHost": "k0dt.ru"},
+                "kserver": {"serverPort": 27072, "serverHost": "127.0.0.1"},
                 "kclient": {"AESkey": "f861feab561441c0e1fdcba91581dd95"},
             }
         }
