@@ -6,7 +6,7 @@ import os
 from kLibs import Kdefault, KSocket, Kjson, Kcrypto
 
 parser = argparse.ArgumentParser(description='khome')
-parser.add_argument('-r', '--role', action='store', dest='khomeRole', help='select role from collector and harvester')
+parser.add_argument('-r', '--role', action='store', dest='khomeRole', help='select role. example --role kserver | kclient')
 parser.add_argument('-f', '--file', action='store', dest='filename', nargs='?', type=argparse.FileType('r'), help='Set full path to parsing file')
 parser.add_argument('-k', '--key', action='store_true', help='create keys pair')
 parser.add_argument('-d', '--default', action='store_true', help='create default configs and dir. ATTENTION!!! REMOVE OLD!!!')
@@ -35,9 +35,9 @@ if results.key:
 
 getDataJSON = Kjson(defaultPath + defaultJSON).getJSONdata()
 
-if results.khomeRole == 'collector':
+if results.khomeRole == 'kserver':
     startCollector = KSocket(getDataJSON).startListener()
-elif results.khomeRole == 'harvester':
+elif results.khomeRole == 'kciient':
     startHarvester = KSocket(getDataJSON).setConnection()
 else:
     print('[ ! ] Role not known')

