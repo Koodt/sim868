@@ -36,9 +36,9 @@ if results.key:
 getDataJSON = Kjson(defaultPath + defaultJSON).getJSONdata()
 
 if results.khomeRole == 'kserver':
-    startCollector = KSocket(getDataJSON).startListener()
+    startKServer = KSocket(getDataJSON).startListener()
 elif results.khomeRole == 'kciient':
-    startHarvester = KSocket(getDataJSON).setConnection()
+    startKClient = KSocket(getDataJSON).setConnection()
 else:
     print('[ ! ] Role not known')
-    sys.exit()    
+    sys.exit()
