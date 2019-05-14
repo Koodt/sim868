@@ -17,25 +17,23 @@ class MongoStatic:
 
     def baseCreate(self, inBase):
         self.inBase = inBase
-        dBase = self.client.self.inBase
+        self.myDb = self.client[self.inBase]
 
-    def collectionCreate():
-        self.posts = self.dBase.posts
+    def collectionCreate(self, inColl):
+        self.posts = self.myDb[inColl]
 
-    def toCollection():
-        post_data = {
-            'title': 'mongo',
-            'content': 'mongo again',
-            'author': 'no mongo'
-        }
-        result = posts.insert_one(post_data)
+    def toCollection(self, postData):
+        self.postData = postData
+        result = self.posts.insert_one(postData)
 
     def collectionFindAll():
         return
 
 testInstance = MongoStatic('mongodb://localhost:27017')
 print(testInstance.dBaseList())
-if testInstance.baseCheck('pymongo_test'):
-    testInstance.baseCreate('pymongo_est')
+if testInstance.baseCheck('pymongo_gest'):
+    testInstance.baseCreate('pymongo_gest')
+    testInstance.collectionCreate('test')
+    testInstance.toCollection({'title': 'mongo', 'content': 'mongo again', 'author': 'no mongo'})
 else:
     print('Nope')
