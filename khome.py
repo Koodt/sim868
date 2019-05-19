@@ -43,7 +43,7 @@ getDataJSON = Kjson(defaultPath + defaultJSON).getJSONdata()
 
 if results.khomeRole == 'kserver':
     startKServer = KSocket(getDataJSON).startListener()
-elif results.khomeRole == 'kciient':
+elif results.khomeRole == 'kclient':
     startKClient = KSocket(getDataJSON).setConnection()
 else:
     print('[ ! ] Role not known')
