@@ -158,3 +158,41 @@ class Kcrypto(object):
         if '1111111111111111' in decryptMessage:
             sys.exit(0)
         print('[ + ] Received "%s"' % decryptMessage)
+
+class MongoStatic:
+    def __init__(self, inBase, inHost):
+        import pymongo
+        self.dBase = inBase
+        self.dHost = inHost
+        self.client = pymongo.MongoClient(self.dHost)
+
+    def baseList(self):
+        return self.client.list_database_names()
+
+    def collList(self):
+        return self.client.self.dBase.list_collection_names()
+
+    def baseCheck(self):
+        if self.dBase in self.baseList():
+            return False
+        else:
+            return True
+
+    def collCheck(self):
+        if self.inColl in self.baseCheck():
+            return False
+        else:
+            return True
+
+    def baseCreate(self):
+        self.myDb = self.client[self.dBase]
+
+    def collectionCreate(self, inColl):
+        self.posts = self.dBase[inColl]
+
+    def toCollection(self, postData):
+        self.postData = postData
+        result = self.posts.insert_one(postData)
+
+    def collectionFindAll():
+        return

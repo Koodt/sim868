@@ -5,14 +5,14 @@ class MongoStatic:
         self.dHost = inHost
         self.client = pymongo.MongoClient(self.dHost)
 
-    def dBaseList(self):
+    def baseList(self):
         return self.client.list_database_names()
 
     def collList(self):
         return self.client.self.dBase.list_collection_names()
 
     def baseCheck(self):
-        if self.dBase in self.dBaseList():
+        if self.dBase in self.baseList():
             return False
         else:
             return True
@@ -37,7 +37,7 @@ class MongoStatic:
         return
 
 testInstance = MongoStatic('pymongo_guest', 'mongodb://localhost:27017')
-print(testInstance.dBaseList())
+print(testInstance.baseList())
 if testInstance.baseCheck():
     testInstance.baseCreate()
 else:

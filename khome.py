@@ -3,7 +3,7 @@
 import sys
 import argparse
 import os
-from kLibs import Kdefault, KSocket, Kjson, Kcrypto
+from kLibs import Kdefault, KSocket, Kjson, Kcrypto, MongoStatic
 
 parser = argparse.ArgumentParser(description='khome')
 parser.add_argument('-r', '--role', action='store', dest='khomeRole', help='select role. example --role kserver | kclient')
