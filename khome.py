@@ -25,15 +25,11 @@ if not os.path.isfile(defaultPath + defaultJSON) and not results.default:
     sys.exit()
 
 if results.default:
-    print('[!!!] Warning. Remove old configs. Are you sure? For attempt print capital yes')
-    answer = input()
-    if answer == 'YES':
+    if defaultConf.checkDefaultConfig():
         defaultConf.removeDefaultDir()
-        defaultConf.createDefaultDir()
-        defaultConf.generateDefaultJSON(defaultJSON)
-        Kcrypto(defaultPath).createKeysPair()
-    else:
-        print('[ - ] Cancelled')
+    defaultConf.createDefaultDir()
+    defaultConf.generateDefaultJSON(defaultJSON)
+    Kcrypto(defaultPath).createKeysPair()
     sys.exit()
 
 if results.key:

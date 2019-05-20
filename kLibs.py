@@ -2,13 +2,24 @@ class Kdefault(object):
     def __init__(self, path):
         self.path = path
 
-    def removeDefaultDir(self):
-        import os, shutil
+    def checkDefaultConfig(self):
+        import os
         if os.path.exists(self.path):
+            return True
+        else:
+            return False
+
+    def removeDefaultDir(self):
+        import shutil, sys
+
+        print('[!!!] Warning. Remove old configs. Are you sure? For attempt print capital yes')
+        answer = input()
+        if answer == 'YES':
             print("[---] Removing %s" % self.path)
             shutil.rmtree(self.path, ignore_errors=True)
         else:
-            print("[ - ] %s not exists" % self.path)
+            print('[ - ] Cancelled')
+            sys.exit()
 
     def createDefaultDir(self):
         import os, sys
@@ -31,10 +42,18 @@ class Kdefault(object):
         import json, os
 
         data = {
-            "services": {
-                "kserver": {"serverPort": 27072, "serverHost": "127.0.0.1"},
-                "kclient": {"AESkey": "f861feab561441c0e1fdcba91581dd95"},
-            }
+            "services":
+                {
+                    "kserver":
+                        {
+                            "serverPort": 27072,
+                            "serverHost": "127.0.0.1"
+                        },
+                    "kclient":
+                        {
+                            "AESkey": "f861feab561441c0e1fdcba91581dd95"
+                        },
+                }
         }
 
         if not os.path.isfile(self.defaultFile):
