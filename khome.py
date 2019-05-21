@@ -10,6 +10,7 @@ parser.add_argument('-r', '--role', action='store', dest='khomeRole', help='sele
 parser.add_argument('-f', '--file', action='store', dest='filename', nargs='?', type=argparse.FileType('r'), help='Set full path to parsing file')
 parser.add_argument('-k', '--key', action='store_true', help='create keys pair')
 parser.add_argument('-d', '--default', action='store_true', help='create default configs and dir. ATTENTION!!! REMOVE OLD!!!')
+
 results = parser.parse_args()
 
 defaultPath = '/opt/khome/defaults/'
