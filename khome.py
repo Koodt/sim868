@@ -16,6 +16,17 @@ results = parser.parse_args()
 defaultPath = '/opt/khome/defaults/'
 defaultJSON = 'default.json'
 defaultConf = Kdefault(defaultPath)
+defaultData = {
+          "services": {
+            "kclient": {
+              "AESkey": "f861feab561441c0e1fdcba91581dd95"
+            },
+            "kserver": {
+              "serverHost": "127.0.0.1",
+              "serverPort": 27072
+            }
+          }
+        }
 
 if len(sys.argv) < 2:
     parser.print_help()
@@ -29,7 +40,7 @@ if results.default:
     if defaultConf.checkDefaultConfig():
         defaultConf.removeDefaultDir()
     defaultConf.createDefaultDir()
-    defaultConf.generateDefaultJSON(defaultJSON)
+    defaultConf.jsonCreator(defaultJSON, defaultData)
     Kcrypto(defaultPath).createKeysPair()
     sys.exit()
 

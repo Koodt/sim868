@@ -37,29 +37,14 @@ class Kdefault(object):
         else:
             print("[+!+] %s exists" % self.path)
 
-    def generateDefaultJSON(self, defaultFile):
-        self.defaultFile = self.path + defaultFile
+    def jsonCreator(self, fileName, jsonData):
+        self.defaultFile = self.path + fileName
         import json, os
-
-        data = {
-            "services":
-                {
-                    "kserver":
-                        {
-                            "serverPort": 27072,
-                            "serverHost": "127.0.0.1"
-                        },
-                    "kclient":
-                        {
-                            "AESkey": "f861feab561441c0e1fdcba91581dd95"
-                        },
-                }
-        }
 
         if not os.path.isfile(self.defaultFile):
             os.mknod(self.defaultFile)
         with open(self.defaultFile, 'w') as defaultJSON:
-            json.dump(data, defaultJSON)
+            json.dump(jsonData, defaultJSON)
 
 class KSocket(object):
     def __init__(self, dataJSON):
