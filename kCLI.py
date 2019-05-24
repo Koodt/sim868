@@ -1,13 +1,27 @@
-import click
+class CliConstructor(object):
+    def __init__(self):
+        self.cli = ''.lower()
 
-@click.command()
-@click.option('--count', default=1, help='Number of greetings.')
-@click.option('--name', prompt='Your name',
-              help='The person to greet.')
-def hello(count, name):
-    """Simple program that greets NAME for a total of COUNT times."""
-    for x in range(count):
-        click.echo('Hello %s!' % name)
+    def initial(self, prompt):
+        import sys
+        self.prompt = prompt
+        while self.cli != 'exit':
+            self.cli = input(self.prompt).lower()
+            try:
+                getattr(self, self.cli)()
+            except:
+                if self.cli != 'exit':
+                    print('Command not found')
+        sys.exit('Graceful exit')
 
-if __name__ == '__main__':
-    hello()
+    def help(self):
+        print('''
+        kCLI helper:
+        help        -       print this message
+        create      -       create config
+        add         -       add service to config
+        del         -       del service from config
+        exit        -       exit from kCLI
+        ''')
+
+local_cli = CliConstructor().initial('kCLI:>')
