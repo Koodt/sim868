@@ -14,6 +14,9 @@ class CliConstructor(object):
                     print('Command not found')
         sys.exit('Graceful exit')
 
+    def add(self):
+        pass
+
     def help(self):
         print('''
         kCLI helper:

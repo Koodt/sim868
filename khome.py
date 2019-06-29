@@ -3,7 +3,7 @@
 import sys
 import argparse
 import os
-from kLibs import Kdefault, KSocket, Kjson, Kcrypto, MongoStatic
+from kLibs import Kdefault, KSocket, Kjson, Kcrypto, MongoStatic, jsonConstructor
 
 parser = argparse.ArgumentParser(description='khome')
 parser.add_argument('-r', '--role', action='store', dest='khomeRole', help='select role. example --role kserver | kclient')
@@ -39,8 +39,9 @@ if not os.path.isfile(defaultPath + defaultJSON) and not results.default:
 if results.default:
     if defaultConf.checkDefaultConfig():
         defaultConf.removeDefaultDir()
+    jsonDefaultFile = jsonConstructor(defaultPath, defaultJSON, defaultData)
     defaultConf.createDefaultDir()
-    defaultConf.jsonCreator(defaultJSON, defaultData)
+    jsonDefaultFile.creator()
     Kcrypto(defaultPath).createKeysPair()
     sys.exit()
 

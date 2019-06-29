@@ -37,14 +37,20 @@ class Kdefault(object):
         else:
             print("[+!+] %s exists" % self.path)
 
-    def jsonCreator(self, fileName, jsonData):
-        self.defaultFile = self.path + fileName
+class jsonConstructor(object):
+    def __init__(self, filePath, fileName, jsonData):
+        self.filePath = filePath
+        self.fileName = fileName
+        self.jsonData = jsonData
+
+    def creator(self):
+        self.defaultFile = self.filePath + self.fileName
         import json, os
 
         if not os.path.isfile(self.defaultFile):
             os.mknod(self.defaultFile)
         with open(self.defaultFile, 'w') as defaultJSON:
-            json.dump(jsonData, defaultJSON)
+            json.dump(self.jsonData, defaultJSON)
 
 class KSocket(object):
     def __init__(self, dataJSON):
